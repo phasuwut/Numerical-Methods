@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Cholesky Decomposition Method</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+    <link rel="stylesheet" href="import/bootstrap-4.3.1/dist/css/bootstrap.min.css">
+    <script src="import/jquery-3.3.1/jquery.min.js"></script>
+    
+    <script src="import/popper.js-1.14.7.js/dist/umd/popper.min.js"></script>
+    <script src="import/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+
+    <script src="import/MathJax-2.7.4/latest.js"></script>
+    
+    <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+    <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+    <link rel="stylesheet" href="import/w3.css">
+
+  <!--
+    การวาง มีผลนะ อะไรก่อนหลัง 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+        <script src="import/jquery-3.3.1/jquery.min.js"></script>
+        <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+         
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+            <script src="import/MathJax-2.7.4/latest.js"></script>
+
+  <script src="https://unpkg.com/mathjs@5.4.1/dist/math.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+            <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+             <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+
+
+             ////////
+  <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+  <script src="import/jquery-3.3.1/jquery.min.js"></script>
+  <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+ 
+  <script src="import/MathJax-2.7.4/latest.js"></script>
+  
+  <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+  <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+  -->
+  
+
+
+
+
+  <script>
+      var En;
+      var  arr1  = new Array(); 
+      var  arr2  = new Array();
+      var arr4=new Array(); //output
+      var Eboolen=0;  //เช็คข้อมูลในตารางว่าเป็นเลขป่าว นะ 0เป้น    1ไม่เป็น
+      var output_matrix_create=1;// 1 คือยังไม่สร้าง
+
+  
+      function create_n_to_matrix(){
+          En=document.getElementById("input_n").value;
+          if((isNaN(En)==false)&&(En!="")){
+            //ถ้าเป็นตัวเลขจะเป็น false
+            var gg='คุณได้สร้าง'+En;
+            En=parseFloat(En); //แปลเป็นfloat
+            create_matrix(En,En+1);  // สร้างตารางเพื่อรับข้อมูล
+            create_input_data_to_array_button();//สร้างปุ่มเอาไว้รับข้อมูลลงอาเรย์
+            document.getElementById("input_n_button").style.display='none';
+            // style.display='block'; //แสดง
+            //style.display='none' // ซ่อน
+            set_i_j_0();
+            document.getElementById("input_n").style.display='none';
+            document.getElementById("input_p_n").innerHTML=gg;
+            //document.getElementById("run_data").style.display='block';
+            
+            // document.getElementById("run_data").style.display='none';  // ซ่อน ปุ่ม
+            //
+            // ช่ิงรับข้อมุล  input00  input01
+        }
+        else{
+          alert("กรุณาป้อนข้อมูลให้ถูกต้อง นะ");
+        }
+      
+      }
+    
+      function push_data_maritx_to_array(){
+    
+    
+        
+          for(var i=0;i<En;i++){
+            arr1[i]  = new Array();
+            var j;
+              for(j=0;j<En;j++){
+                
+                var stringij='input'+i+j;
+                var EEij=document.getElementById(stringij).value; //ไปเอาข้อมูลใน ตารางมา
+                arr1[i][j]=EEij;
+              }
+              //j=j+1;
+              var stringij='input'+i+j;
+             // console.log(stringij);
+              var EEij=document.getElementById(stringij).value; //ไปเอาข้อมูลใน ตารางมา
+             // console.log(EEij);
+              arr2[i]=EEij;
+          }
+            console.log(arr1);
+            console.log(arr2);
+    
+    
+    
+    
+    
+      }
+    
+      function check_float_to_martix(){
+        
+        for(var i=0;i<En;i++){
+          for(var j=0;j<En;j++){
+           // console.log(isNaN(arr1[i][j])," gg");
+           if(isNaN(arr1[i][j])==false && (arr1[i][j] !="")){}
+           else{
+              Eboolen =1; 
+           }
+            
+          }
+          if(isNaN(arr2[i])==false && (arr2[i] !="")){}
+           else{
+              Eboolen =1; 
+           }
+    
+        }
+    
+      }
+    
+      function check_data_j_to_n_is_repeatedly(){
+        //arr1
+        var Edata_num=0;
+        for(var i=0;i<En;i++){
+          var Edatai=arr1[i][0];
+          Edata_num=0;
+          for(var j=0;j<En;j++){
+            if( (Edatai==arr1[i][j]) ){
+                Edata_num=Edata_num+1;
+            }
+          }
+          if(Edata_num==(En)){
+            return (i+1);
+          }
+          
+        }
+        return 0;
+      }
+       
+      function check_data_ij_0_martix(){
+        var Eij0=0;
+        for(var i=0;i<En;i++){
+          for(var j=0;j<En;j++){
+              if(arr1[i][j]==0){
+                Eij0=Eij0+1;
+              }
+          }
+        }
+        if(Eij0==En){
+          return 1;
+        }
+        return 0;
+      }
+    
+      function output_matrix(m,n){
+                
+                //อ่าน Tag <div id matrix>
+                var body = document.getElementById( "matrix_output" );
+                // สร้าง <table> และ <tbody>
+                var tbl = document.getElementById( "table_output" );
+                //tbl.id="table_output"
+                var tblBody = document.createElement( "tbody" );
+                tblBody.id="tbody_output"
+                // n แถว m คอลัมน์
+                var  cellText  = new Array(); 
+                for( var i = 0 ; i < m ; i++ )
+                {
+                    cellText[i]  = new Array();
+                    // สร้าง row
+                    var row = document.createElement( "tr" );
+                    row.id="tr_output"
+                    // สร้าง col
+                    for( var j = 0 ; j < n ; j++ )
+                    {
+                        // สร้าง td
+                        
+                        var cell = document.createElement( "td" );
+                        cell.id="td_output"
+                        cellText[i][j] = document.createElement( "p" );
+                       // cellText[i][j].setAttribute( "width" , "8%" );
+                        cell.appendChild( cellText[i][j] );
+                        cellText[i][j].id = 'output'+i+j;
+                        row.appendChild( cell );
+                        if(j==0 ){
+                          cell.style="background-color: #FF8C00";
+
+                        }
+                    };
+                    // แทรกแถว ลงใน tbody
+                    tblBody.appendChild( row );
+                };
+                // ใส่ <tbody> ลงใน <table>
+                tbl.appendChild( tblBody );
+                // ใส่ <table> ลงใน <body>
+                body.appendChild( tbl );
+                // กำหนด border
+               // tbl.setAttribute( "border" , "0" );
+    }
+       
+      function insert_data_to_matrix(){
+        //output00
+        //output10
+    
+        for(var i=0;i<En;i++){
+          var str="output"+i+"0";
+          console.log(str);
+    
+          var insertD= document.getElementById(str);
+          var str = "A";
+          var result = (i.toString()).sub();
+          insertD.innerHTML = str +result;
+        }
+
+        for(var i=0;i<En;i++){
+          var str="output"+i+"1";
+          console.log(str);
+    
+          var insertD= document.getElementById(str);
+          //arr4[i]= arr4[i].toFixed(6);
+          insertD.innerHTML = arr4[i];
+        }
+        
+        
+        
+      }    
+      
+      function create_matrix(m,n){
+                //input_data_table     
+               //  input_data_tbody
+               // input_data_tr
+               // input_data_td
+                //อ่าน Tag <div id matrix>
+                var body = document.getElementById( "matrix_input" );
+                // สร้าง <table> และ <tbody>
+                var tbl= document.createElement( "table" );
+                tbl.id="input_data_table";
+                var tblBody = document.createElement( "tbody" );
+                tblBody.id="input_data_tbody";
+                // n แถว m คอลัมน์
+                var  cellText  = new Array(); 
+                for( var i = 0 ; i < m ; i++ )
+                {
+                    cellText[i]  = new Array();
+                    // สร้าง row
+                    var row = document.createElement( "tr" );
+                    row.id="input_data_tr";
+                    // สร้าง col
+                    for( var j = 0 ; j < n ; j++ )
+                    {
+                        // สร้าง td
+                        
+                        var cell = document.createElement( "td" );
+                        cell.id="input_data_td";
+                        cellText[i][j] = document.createElement( "input" );
+                        cellText[i][j].setAttribute( "width" , "8%" );
+                        cell.appendChild( cellText[i][j] );
+                        cellText[i][j].id = 'input'+i+j;
+                        row.appendChild( cell );
+                    };
+                    // แทรกแถว ลงใน tbody
+                    tblBody.appendChild( row );
+                };
+                // ใส่ <tbody> ลงใน <table>
+                tbl.appendChild( tblBody );
+                // ใส่ <table> ลงใน <body>
+                body.appendChild( tbl );
+                // กำหนด border
+               // tbl.setAttribute( "border" , "0" );
+              }
+       
+      function check_symmetric(a,at){
+  
+        for (var i = 0; i < N; i++) {
+            for (var j = 0; j < N; j++) {
+                if (a[i][j] != at[i][j]) {
+                  return false; 
+                } 
+            }
+        }
+        return true;     
+      }
+  
+      function push_data_maritx_to_array1(){
+    
+    //Number.isFinite(-1.23) //true
+    var Earr1 = new Array();
+    //var Earr2 = new Array();
+  
+    for(var i=0;i<En+1;i++){
+      Earr1[i]  = new Array();
+      var j;
+        for(j=0;j<En+1;j++){
+          if(i==0 || j==0){
+            Earr1[i][j]="ads";
+          }
+          else{
+            var stringij='input'+i+j;
+            var EEij=document.getElementById(stringij).value; //ไปเอาข้อมูลใน ตารางมา
+            Earr1[i][j]=EEij;
+          }
+     
+        }
+    
+    }
+  
+  
+    var boolen1=1;
+    for(var i=1;i<En+1;i++){
+        for(j=1;j<En+1;j++){
+          if(i==0 || j==0){}
+          else{
+  
+            Earr1[i][j]=parseFloat(Earr1[i][j]);
+  
+            if(Number.isFinite(Earr1[i][j])==true){}
+            else{
+              boolen1=0;
+            }
+          }   
+  
+        }  
+    }
+  
+   
+  
+    if(boolen1==1){
+      for(var i=0;i<En+1;i++){
+        if(i==0){}
+        else{
+          arr1[i-1]  = new Array();
+        }
+      var j;
+        for(j=0;j<En+1;j++){
+          if(i==0 || j==0){
+  
+          }
+          else{
+            arr1[i-1][j-1]=Earr1[i][j];
+          }
+         
+          
+        }    
+       
+      }
+    }
+  
+  
+    else{
+        alert("กรุณาป้อนข้อมูลให้ถูหต้อง");
+    }
+  
+    console.log(arr1);
+  
+  
+  
+  }
+  
+      function func(X) { // คำนวนหา ฟังช้น
+           var expression = document.getElementById("fxx").value;
+           expr = math.compile(expression);
+           let scope = {x:parseFloat(X)};
+           return expr.eval(scope);
+      }
+      
+      function delete_data_array(){
+          var Elength_arr1;
+          Elength_arr1= arr1.length;
+          for(var i=0;i<Elength_arr1;i++){
+              arr1.pop();
+              arr2.pop();
+              arr4.pop();
+          }
+          arr1  = new Array(); 
+          arr2  = new Array();
+          arr4 =new Array();
+          Eboolen=0; 
+      }
+      
+      function create_input_data_to_array_button(){
+        var body = document.getElementById( "input_data" );
+                var tbl= document.createElement( "input" );
+                tbl.type="button";
+                tbl.id="run_data";
+                tbl.value="คำนวน"
+                tbl.onclick=cholesky;//gaussian_elimination() มันต้องเขียนแบบนี้
+                body.appendChild( tbl );
+                tbl.className+="btn btn-primary "
+      }
+      
+      // delete_data_array() ล้างข้อมูลในอาเรย์ทั้งหมด 
+      //func(X)  // คำนวนหา ฟังช้น
+      // create_input_data_to_array_button();// สร้างปุ่มเอาไว้รับข้อมูลลงอาเรย์
+     
+       // push_data_maritx_to_array(); // ไปเอาข้อมุลลงอาเรย์
+       // check_float_to_martix(); //เอาไปเช็คว่าเป็นเลขป่าว
+       
+        // output_matrix(En,1);  //สร้างตารางเพื่อแสดงผมลัพ
+       //  insert_data_to_matrix(); //ใส่ข้อมูลลงหน้า gui
+          
+       //check_symmetric(a,at) // เป็นการเช็คว่าเป็น symmetric  true false
+       
+  
+       //push_data_maritx_to_array1() รับข้อมุลเป็นarray แบบเช็คว่ามีข้อมูลป่าว flost  ก่อนที่จะรับเข้าarray จริง
+   
+       function set_i_j_0(){
+          for(var i=0;i<En;i++){
+             for(var j=0;j<En+1;j++){
+               
+              var string111='input'+i+j;
+              if(j==En){
+                document.getElementById(string111).placeholder="B"+i;
+                document.getElementById(string111).className+=" w3-hover-blue";
+                document.getElementById(string111).className+=" w3-input";
+
+              }
+              else{
+                document.getElementById(string111).placeholder="A"+i+j;
+                document.getElementById(string111).className+=" w3-hover-red";
+                document.getElementById(string111).className+=" w3-input";
+              }
+                
+                
+               
+             }
+           }
+    
+          
+         }
+   
+       function check_symmetric(a,at){
+          for (var i = 0; i < En; i++) {
+            for (var j = 0; j < En; j++) {
+              if (a[i][j] != at[i][j]) {
+                      return false; 
+              } 
+            }
+          }
+          return true;     
+      }
+
+        function cholesky_l(a){
+          var  m = a.length;
+          var l = new Array();
+          for(var i=0;i<En;i++){
+            l[i]= new Array();
+            for(var j=0;j<En;j++){
+              l[i][j]=0;
+            }
+          }
+          for(var i = 0; i< m;i++){
+          // l[i]= new Array();
+              for(var k = 0; k < (i+1); k++){
+                var sum = 0;
+                for(var j = 0; j < k; j++){
+                      sum += l[i][j] * l[k][j];
+                }
+                if(i == k){
+                  l[i][k]=Math.sqrt(a[i][i] - sum);
+                }
+                else{
+                  l[i][k]= (1.0 / l[k][k] * (a[i][k] - sum));
+                }
+
+              }
+          }
+            return l;
+        }
+
+        function cholesky(){
+          delete_data_array();
+          push_data_maritx_to_array(); // ไปเอาข้อมุลลงอาเรย์
+          check_float_to_martix(); //เอาไปเช็คว่าเป็นเลขป่าว
+          if(Eboolen==0){
+            var at=math.transpose(arr1);
+            if(check_symmetric(arr1,at)){
+              /*
+                var r = math.lup(arr1);
+                //console.log("L ", r.L);
+                var Lt= math.transpose(r.L);
+                console.log("L ", r.L);
+                console.log("Lt ", Lt);
+                var y;
+                y=math.lusolve(r.L, arr2) ; // ax=b   
+                console.log("y ", y);
+                var x;
+                x=math.lusolve(Lt, y);
+                console.log("x ", x);
+      */
+                var L=cholesky_l(arr1);
+                console.log("L ", L);
+                var Lt= math.transpose(L);
+                console.log("Lt ", Lt);
+
+                var y;
+                y=math.lusolve(L, arr2) ; // ax=b   
+                console.log("y ", y);
+                var x;
+                x=math.lusolve(Lt, y);
+                console.log("x ", x);
+
+                for(var i=0;i<En;i++){
+                    var Ed;
+                      Ed=x[i];
+                      Ed=parseFloat(Ed);// แปลเป็นfloat
+                      Ed= Ed.toFixed(6); //ทศนิยม 6 ตำแหน่ง
+                      arr4[i]=Ed;
+                }   
+
+                if(output_matrix_create==1){
+                  output_matrix(En,2);
+                  output_matrix_create=0;
+                }
+                insert_data_to_matrix();
+            }
+            else{
+                alert("กรุณาป้อนข้อมูลให้ถูกต้อง ตอนนี้ยังไม่เป็น symmetric นะ ")
+            }
+          }
+          else{
+            alert("กรุณาป้อนข้อมูลให้ถูกต้องนะ ครับ")
+          }
+        }
+          
+        
+        
+        
+    </script>
+  
+
+
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light fixed-top  "style="background-color: 	#40E0D0;">
+        <a class="navbar-brand pb-2" href="index.html">Numerical</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="nav navbar-nav ">
+    
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Roots of Equations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="1_Graphical_Method.html">Graphical Method</a>
+                  <a class="dropdown-item" href="1_Bisection_Method.html">Bisection Method</a>
+                  <a class="dropdown-item" href="1_False-Position_Method.html">False-Position Method</a>
+                  <a class="dropdown-item" href="1_One-point_Iteration_Method.html">One-point Iteration Method</a>
+                  <a class="dropdown-item" href="1_Newton_Method.html">Newton Method</a>
+                  <a class="dropdown-item" href="1_Secant_Method.html">Secant Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Linear Algebraic Equations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="2_Cramer’s_Rule.html">Cramer’s Rule</a>
+                  <a class="dropdown-item" href="2_Gauss_Elimination_Method.html">Gauss Elimination Method</a>
+                  <a class="dropdown-item" href="2_Gauss_Jordan_Method.html">Gauss-Jordan Method</a>
+                  <a class="dropdown-item" href="2_Matrix_Inversion_Method.html">Matrix Inversion Method</a>
+                  <a class="dropdown-item" href="2_LU_Decomposition_Method.html">LU Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Cholesky_Decomposition_Method.html">Cholesky Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Jacobi_Iteration_Method.html">Jacobi Iteration Method</a>
+                  <a class="dropdown-item" href="2_Gauss-Seidel_Iteration_Method.html">Gauss-Seidel Iteration Method</a>
+                  <a class="dropdown-item" href="2_Conjugate_Gradient_Method.html">Conjugate Gradient Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Interpolation and Extrapolation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Newton's divided-differences</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Newton.html">LinearInterpolation</a></li>
+                    <li><a class="dropdown-item" href="3_Quadraticq_Newton.html">QUADRATIC INTERPOLATION</a></li>
+                    <li><a class="dropdown-item" href="3_Polynomial_Newton.html">POLYNOMIAL INTERPOLATION</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Lagrange polynomials</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Lagrange.html">Linear interpolation</a></li>
+                    <li><a class="dropdown-item" href="3_Quadratic_Lagrange.html">Quadratic Interpolation</a></li>
+                    <li><a class="dropdown-item" href="3_General_Form.html">General Form</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spline interpolation</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Spline.html">Linear Spline</a></li>
+                    <li><a class="dropdown-item" href="3_quadratic_splines.html">QUADRATIC SPLINE</a></li>
+                    <li><a class="dropdown-item" href="3_CUBIC_splines.html">CUBIC SPLINE</a></li>
+                  </ul>
+                </li>
+      
+                
+              </ul>
+      
+              
+      
+        
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Least Squares Regression
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="4_Linear_Regression.html">Linear Regression</a>
+                  <a class="dropdown-item" href="4_Polynomial_Regression.html">Polynomial Regression</a>
+                  <a class="dropdown-item" href="4_Multiple_linear_regression.html">Multiple linear regression</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Integration and Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                 <!--
+                  <a class="dropdown-item" href="#">Trapezoidal Rule</a>
+                  <a class="dropdown-item" href="#">Composite Trapezoidal Rule </a>
+                  <a class="dropdown-item" href="#">Simpson’s Rules</a>
+                  <a class="dropdown-item" href="#">Composite Simpson's Rule</a>
+                 -->
+                 <a class="dropdown-item" href="5_Composite_Trapezoidal_Rule.html">Composite Trapezoidal Rule </a>
+                 <a class="dropdown-item" href="5_Composite_Simpson's_Rule.html">Composite Simpson's Rule</a>
+             
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Numerical Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">First Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="6_Forward _First.html">Forward Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="6_Backward_First.html">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="6_Central_First.html">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Second Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="6_Forward_Second.html">Forward  Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="6_Backward_Second.html">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="6_Central_Second.html">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+              </ul>
+            </li>
+    
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Ordinary Differential Equation
+                  <!--
+                    Ordinary Differential Equation
+                  -->
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="7_Euler's_method.html">Euler's method</a>
+                  <a class="dropdown-item" href="7_Heunm_method.html">Heun's method </a>
+                  <a class="dropdown-item" href="7_Modified_Euler_method.html">Modified Euler's method </a>
+             
+              </ul>
+            </li>
+      
+      
+          
+      
+    
+      
+      
+      
+            <!--
+      
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Submenu</a></li>
+                    <li><a class="dropdown-item" href="#">Submenu0</a></li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 1</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+      -->
+            
+      
+          </ul>
+        </div>
+    </nav>
+      
+    <style>
+          body  {
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+      
+      }
+      </style>
+    <style>
+  
+    .navbar-nav li:hover > ul.dropdown-menu {
+      display: block;
+      background-color: #FFC0CB;
+      
+  }
+  .dropdown-submenu {
+      position:relative;
+      background-color: #FFC0CB;
+  
+  }
+  .dropdown-submenu>.dropdown-menu {
+      top:0;
+      left:100%;
+      margin-top:-6px;
+      background-color: #FFC0CB;
+  
+  }
+
+  
+  /* rotate caret on hover */
+  .dropdown-menu > li > a:hover:after {
+      text-decoration: underline;
+      transform: rotate(-90deg);
+      background-color: #FFC0CB;
+  } 
+
+    </style>
+      <div class="container-fluid" style="margin-top:90px">
+      </div>
+     
+
+
+  
+ 
+
+ 
+
+<div class="container-fluid">
+		<center>
+        <p style="font-size:50px;">Cholesky Decomposition Method</p>			
+      </center>
+
+    <div class="row">
+      <div class="col-sm-12" >
+					
+          <center>
+    
+        <div id="input_data">
+				
+					
+							<div class="form-group">
+									<input type="text" id="input_n" class="w3-input w3-border w3-animate-input"  style="width:30%">
+									<input type="button" onclick="create_n_to_matrix()" id="input_n_button" value="รับข้อมูล" class="btn btn-primary "> 
+
+								</div>
+								<p id="input_p_n"></p>
+						
+
+      </div>
+    </center>
+      </div>
+
+      <div class="col-sm-6" >
+        <div id="plot"></div>
+      </div>
+    
+    </div>
+
+  <div class="row">
+    <div class="col-sm-12" >
+        <center>
+            <div id='matrix_input' class="table-responsive ">          
+
+          </center>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="column">
+          <div id="Interpolation">
+          </div>
+      </div>
+  </div>
+
+
+
+  <div class="row">
+      <div class="col-sm-3" >
+      </div>
+
+      <div class="col-sm-6" >
+        <br>
+        <p id ="output_E11"></p>
+          <div class="table-responsive" id="matrix_output">
+              <table class="table " id="table_output">
+              </table>
+          </div>
+      </div>
+      
+      <div class="col-sm-3" >
+        </div>
+   </div>
+
+</div>
+<style>
+  
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: center;
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    td{
+      text-align: center;
+    
+    }
+     input{
+      text-align: center;
+
+     }
+     tr,td,tbody,table{
+      text-align: center;
+      border: 1px solid black;
+     
+     }
+     tr:hover {background-color:#FFE4B5;}
+    
+    tr {background-color:#FA8072;}
+    table {
+        border-collapse: collapse;
+    }
+    
+    </style>
+
+
+</body>
+</html>

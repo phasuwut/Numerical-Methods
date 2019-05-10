@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Numerical method </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+  <link rel="stylesheet" href="import/bootstrap-4.3.1/dist/css/bootstrap.min.css">
+  <script src="import/jquery-3.3.1/jquery.min.js"></script>
+  
+  <script src="import/popper.js-1.14.7.js/dist/umd/popper.min.js"></script>
+  <script src="import/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+
+  <script src="import/MathJax-2.7.4/latest.js"></script>
+  
+  <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+  <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+  <link rel="stylesheet" href="import/w3.css">
+
+
+</head>
+<body >
+
+    <nav class="navbar navbar-expand-md navbar-light fixed-top  "style="background-color: 	#40E0D0;">
+        <a class="navbar-brand pb-2" href="index.html">Numerical</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="nav navbar-nav ">
+    
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Roots of Equations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="1_Graphical_Method.html">Graphical Method</a>
+                  <a class="dropdown-item" href="1_Bisection_Method.html">Bisection Method</a>
+                  <a class="dropdown-item" href="1_False-Position_Method.html">False-Position Method</a>
+                  <a class="dropdown-item" href="1_One-point_Iteration_Method.html">One-point Iteration Method</a>
+                  <a class="dropdown-item" href="1_Newton_Method.html">Newton Method</a>
+                  <a class="dropdown-item" href="1_Secant_Method.html">Secant Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Linear Algebraic Equations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="2_Cramer’s_Rule.html">Cramer’s Rule</a>
+                  <a class="dropdown-item" href="2_Gauss_Elimination_Method.html">Gauss Elimination Method</a>
+                  <a class="dropdown-item" href="2_Gauss_Jordan_Method.html">Gauss-Jordan Method</a>
+                  <a class="dropdown-item" href="2_Matrix_Inversion_Method.html">Matrix Inversion Method</a>
+                  <a class="dropdown-item" href="2_LU_Decomposition_Method.html">LU Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Cholesky_Decomposition_Method.html">Cholesky Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Jacobi_Iteration_Method.html">Jacobi Iteration Method</a>
+                  <a class="dropdown-item" href="2_Gauss-Seidel_Iteration_Method.html">Gauss-Seidel Iteration Method</a>
+                  <a class="dropdown-item" href="2_Conjugate_Gradient_Method.html">Conjugate Gradient Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Interpolation and Extrapolation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Newton's divided-differences</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Newton.html">LinearInterpolation</a></li>
+                    <li><a class="dropdown-item" href="3_Quadraticq_Newton.html">QUADRATIC INTERPOLATION</a></li>
+                    <li><a class="dropdown-item" href="3_Polynomial_Newton.html">POLYNOMIAL INTERPOLATION</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Lagrange polynomials</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Lagrange.html">Linear interpolation</a></li>
+                    <li><a class="dropdown-item" href="3_Quadratic_Lagrange.html">Quadratic Interpolation</a></li>
+                    <li><a class="dropdown-item" href="3_General_Form.html">General Form</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spline interpolation</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Spline.html">Linear Spline</a></li>
+                    <li><a class="dropdown-item" href="3_quadratic_splines.html">QUADRATIC SPLINE</a></li>
+                    <li><a class="dropdown-item" href="3_CUBIC_splines.html">CUBIC SPLINE</a></li>
+                  </ul>
+                </li>
+      
+                
+              </ul>
+      
+              
+      
+        
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Least Squares Regression
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="4_Linear_Regression.html">Linear Regression</a>
+                  <a class="dropdown-item" href="4_Polynomial_Regression.html">Polynomial Regression</a>
+                  <a class="dropdown-item" href="4_Multiple_linear_regression.html">Multiple linear regression</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Integration and Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                 <!--
+                  <a class="dropdown-item" href="#">Trapezoidal Rule</a>
+                  <a class="dropdown-item" href="#">Composite Trapezoidal Rule </a>
+                  <a class="dropdown-item" href="#">Simpson’s Rules</a>
+                  <a class="dropdown-item" href="#">Composite Simpson's Rule</a>
+                 -->
+                 <a class="dropdown-item" href="5_Composite_Trapezoidal_Rule.html">Composite Trapezoidal Rule </a>
+                 <a class="dropdown-item" href="5_Composite_Simpson's_Rule.html">Composite Simpson's Rule</a>
+             
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Numerical Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">First Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="6_Forward _First.html">Forward Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="6_Backward_First.html">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="6_Central_First.html">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Second Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="6_Forward_Second.html">Forward  Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="6_Backward_Second.html">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="6_Central_Second.html">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+              </ul>
+            </li>
+    
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Ordinary Differential Equation
+                  <!--
+                    Ordinary Differential Equation
+                  -->
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="7_Euler's_method.html">Euler's method</a>
+                  <a class="dropdown-item" href="7_Heunm_method.html">Heun's method </a>
+                  <a class="dropdown-item" href="7_Modified_Euler_method.html">Modified Euler's method </a>
+             
+              </ul>
+            </li>
+      
+      
+          
+      
+    
+      
+      
+      
+            <!--
+      
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Submenu</a></li>
+                    <li><a class="dropdown-item" href="#">Submenu0</a></li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 1</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+      -->
+            
+      
+          </ul>
+        </div>
+    </nav>
+      
+    <style>
+          body  {
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+      
+      }
+      </style>
+    <style>
+  
+    .navbar-nav li:hover > ul.dropdown-menu {
+      display: block;
+      background-color: #FFC0CB;
+      
+  }
+  .dropdown-submenu {
+      position:relative;
+      background-color: #FFC0CB;
+  
+  }
+  .dropdown-submenu>.dropdown-menu {
+      top:0;
+      left:100%;
+      margin-top:-6px;
+      background-color: #FFC0CB;
+  
+  }
+
+  
+  /* rotate caret on hover */
+  .dropdown-menu > li > a:hover:after {
+      text-decoration: underline;
+      transform: rotate(-90deg);
+      background-color: #FFC0CB;
+  } 
+
+    </style>
+      <div class="container-fluid" style="margin-top:90px">
+      </div>
+     
+
+
+
+
+      <div class="jumbotron text-center" style="margin-bottom:0; background-color:#FF7F50; " >
+          <h1>Numerical method</h1>
+         
+
+      </div>
+
+      <center>
+          <div>
+
+              <h2 style=" color: Red;">Roots of Equations</h2>
+              <div class="row">
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p> <button class="w3-button w3-round-xlarge w3-red"><a href="1_Graphical_Method.html">Graphical Method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-red"><a href="1_Bisection_Method.html">Bisection Method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6">
+                      <p>  <button class="w3-button w3-round-xlarge w3-red"><a href="1_False-Position_Method.html">False-Position Method</a></button> </p>
+                  </div>
+                
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p> <button class="w3-button w3-round-xlarge w3-red"><a href="1_One-point_Iteration_Method.html">One-point Iteration Method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-red"><a href="1_Newton_Method.html">Newton Method</a></button> </p>
+                  </div>
+                  
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-red"><a href="1_Secant_Method.html">Secant Method</a></button> </p>
+                  </div>
+      
+                  
+              </div>
+        </div>
+     
+      </center>
+     
+      <center>
+          <div>
+              <h2 style=" color: orange;">Linear Algebraic Equations</h2>
+              
+              <div class="row">
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p> <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Cramer’s_Rule.html">Cramer’s Rule</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Gauss_Elimination_Method.html">Gauss Elimination Method</a></button> </p>
+                  </div>
+                
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p> <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Gauss_Jordan_Method.html">Gauss-Jordan Method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Matrix_Inversion_Method.html">Matrix Inversion Method</a></button> </p>
+                  </div>
+                  
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-orange"><a href="2_LU_Decomposition_Method.html">LU Decomposition Method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>    <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Cholesky_Decomposition_Method.html">Cholesky Decomposition Method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p> <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Jacobi_Iteration_Method.html">Jacobi Iteration Method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p> <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Gauss-Seidel_Iteration_Method.html">Gauss-Seidel Iteration Method</a></button> </p>
+                  </div>
+                  
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p> <button class="w3-button w3-round-xlarge w3-orange"><a href="2_Conjugate_Gradient_Method.html">Conjugate Gradient Method</a></button> </p>
+                  </div>
+              </div>
+      
+          </div>
+      </center>
+
+        <center>
+            <div>
+                <h2 style=" color: teal;">Interpolation and Extrapolation</h2>
+                
+                <h4 style=" color: green;">      Newton's divided-differences</h4>
+                <div class="row">
+        
+                    <div class="col-md-4 col-sm-4 col-xs-6"> 
+                        <p> <button class="w3-button w3-round-xlarge w3-green"><a href="3_Linear_Newton.html">LinearInterpolation</a></button> </p>
+                    </div>
+        
+                    <div class="col-md-4 col-sm-4 col-xs-6"> 
+                        <p>  <button class="w3-button w3-round-xlarge w3-green"><a href="3_Quadraticq_Newton.html">QUADRATIC INTERPOLATION</a></button> </p>
+                    </div>
+        
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <p>  <button class="w3-button w3-round-xlarge w3-green"><a href="3_Polynomial_Newton.html">POLYNOMIAL INTERPOLATION</a></button> </p>
+                    </div>
+                  </div>
+        
+        
+                  <h4 style=" color: #0ad10a ;">      Lagrange polynomials</h4>
+                    <div class="row">
+                      <div class="col-md-4 col-sm-4 col-xs-6"> 
+                          <p> <button class="w3-button w3-round-xlarge w3-light-green"><a href="3_Linear_Lagrange.html">Linear interpolation</a></button> </p>
+                      </div>
+        
+                      <div class="col-md-4 col-sm-4 col-xs-6"> 
+                          <p>  <button class="w3-button w3-round-xlarge w3-light-green"><a href="3_Quadratic_Lagrange.html">Quadratic Interpolation</a></button> </p>
+                      </div>
+                      
+                      <div class="col-md-4 col-sm-4 col-xs-6"> 
+                          <p>  <button class="w3-button w3-round-xlarge w3-light-green"><a href="3_General_Form.html">General Form</a></button> </p>
+                      </div>
+                    </div>
+        
+        
+                    <h4 style=" color: Lime;">      Spline interpolation</h4>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-6"> 
+                            <p>  <button class="w3-button w3-round-xlarge w3-lime"><a href="3_Linear_Spline.html">Linear Spline</a></button> </p>
+                        </div>
+        
+                        <div class="col-md-4 col-sm-4 col-xs-6"> 
+                            <p>  <button class="w3-button w3-round-xlarge w3-lime"><a href="3_quadratic_splines.html">QUADRATIC SPLINE</a></button> </p>
+                        </div>
+        
+                        <div class="col-md-4 col-sm-4 col-xs-6"> 
+                            <p>  <button class="w3-button w3-round-xlarge w3-lime"><a href="3_CUBIC_splines.html">CUBIC SPLINE</a></button> </p>
+                        </div>
+                    </div>
+            </div>
+          </center>
+
+
+
+      <center>
+          <div>
+              <h2 style=" color: rgb(0, 110, 255);">      Least Squares Regression</h2>
+              <div class="row">
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-blue"><a href="4_Linear_Regression.html">Linear Regression</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-blue"><a href="4_Polynomial_Regression.html">Polynomial Regression</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-blue"><a href="4_Multiple_linear_regression.html">Multiple linear regression</a></button> </p>
+                  </div>
+              </div>
+          </div>
+      </center>
+
+
+     <center>
+        <div>
+
+            <h2 style=" color: green;">      Integration and Differentiation</h2>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6"> 
+                    <p>  <button class="w3-button w3-round-xlarge w3-green"><a href="5_Composite_Trapezoidal_Rule.html">Composite Trapezoidal Rule </a></button> </p>
+                </div>
+    
+                <div class="col-md-6 col-sm-6 col-xs-6"> 
+                    <p>  <button class="w3-button w3-round-xlarge w3-green"><a href="5_Composite_Simpson's_Rule.html">Composite Simpson's Rule</a></button> </p>
+                </div>
+    
+            </div>
+        </div>
+      </center>
+
+      <center>
+          <div>
+
+              <h2 style=" color: Orange;">      Numerical Differentiation</h2>
+      
+      
+              <h4 style=" color: Yellow;">      First Divided Difference</h4>
+              <div class="row">
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-yellow"><a href="6_Forward _First.html">Forward Divided Difference </a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-yellow"><a href="6_Backward_First.html">Backward Divided Difference</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-yellow"><a href="6_Central_First.html">Central Divided Difference</a></button> </p>
+                  </div>
+      
+              </div>
+      
+              <h4 style=" color: orange;">      Second Divided Difference</h4>
+              <div class="row">
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-orange"><a href="6_Forward_Second.html">Forward  Divided Difference </a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-orange"><a href="6_Backward_Second.html">Backward Divided Difference</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-orange"><a href="6_Central_Second.html">Central Divided Difference</a></button> </p>
+                  </div>
+      
+              </div>
+      
+          </div>
+      </center>
+
+
+
+
+      <center>
+          <div>
+
+              <h2 style=" color: Brown;">      Ordinary Differential Equation</h2>
+              <div class="row">
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-brown"><a href="7_Euler's_method.html">Euler's method</a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-brown"><a href="7_Heunm_method.html">Heun's method </a></button> </p>
+                  </div>
+      
+                  <div class="col-md-4 col-sm-4 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-brown"><a href="7_Modified_Euler_method.html">Modified Euler's method </a></button> </p>
+                  </div>
+      
+              </div>
+          </div>
+        </center>
+
+
+        <center>
+          <div>
+
+              <h2 style=" color:#f707eb;"> งานที่ให้ไปเพิ่ม</h2>
+              <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-6"> 
+                      <p>  <button class="w3-button w3-round-xlarge w3-brown"><a href="999999_CUBIC_splines.html">CUBIC splines แบบทำเอง</a></button> </p>
+                  </div>
+      
+      
+              </div>
+          </div>
+        </center>
+
+
+    
+<!--
+
+  <div class="container-fluid" style="margin-top:100px"> </div>
+
+-->
+
+<div class="jumbotron text-center" style="margin-bottom:0;background-color: #FFC0CB">
+
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-6"  >
+                <h2>Submitted by </h2>
+                <p>Phasuwut  Chunnapiya </p>
+            
+                <h2>Student ID number</h2> 
+                <p>5904062610135 </p>
+            </div>
+
+            <div class="col-sm-6" >
+                <h3>About As...</h3>
+                <hr style="border-color: black">
+                <p>เว็บนี้เป็นงานโปรเจ็คในวิชา Numerical Method </p>
+
+                <p>ของมหาวิทยาลัย </p>
+                <p>King Mongkut'sUniversity of Technology North Bangkok </p>
+                <p>ภาควิชา  </p>
+                <p>Department of Computer and Information Science</p>
+
+                
+              </div>
+
+        </div>
+    </div>
+  </div>
+
+       <!--
+          <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand pb-2" href="index.html">Numerical</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html" Home>Home </a>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Roots of Wquations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="1_Graphical_Method.html">Graphical Method</a>
+                  <a class="dropdown-item" href="1_Bisection_Method.html">Bisection Method</a>
+                  <a class="dropdown-item" href="1_False-Position_Method.html">False-Position Method</a>
+                  <a class="dropdown-item" href="1_One-point_Iteration_Method.html">One-point Iteration Method</a>
+                  <a class="dropdown-item" href="1_Newton_Method.html">Newton Method</a>
+                  <a class="dropdown-item" href="1_Secant_Method.html">Secant Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Linear Algebraic Equations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="2_Cramer’s_Rule.html">Cramer’s Rule</a>
+                  <a class="dropdown-item" href="2_Gauss_Elimination_Method.html">Gauss Elimination Method</a>
+                  <a class="dropdown-item" href="2_Gauss_Jordan_Method.html">Gauss-Jordan Method</a>
+                  <a class="dropdown-item" href="2_Matrix_Inversion_Method.html">Matrix Inversion Method</a>
+                  <a class="dropdown-item" href="2_LU_Decomposition_Method.html">LU Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Cholesky_Decomposition_Method.html">Cholesky Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Jacobi_Iteration_Method.html">Jacobi Iteration Method</a>
+                  <a class="dropdown-item" href="2_Gauss-Seidel_Iteration_Method.html">Gauss-Seidel Iteration Method</a>
+                  <a class="dropdown-item" href="2_Conjugate_Gradient_Method.html">Conjugate Gradient Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Interpolation and Extrapolation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Newton's divided-differences</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Newton.html">LinearInterpolation</a></li>
+                    <li><a class="dropdown-item" href="3_Quadraticq_Newton.html">QUADRATIC INTERPOLATION</a></li>
+                    <li><a class="dropdown-item" href="#">POLYNOMIAL INTERPOLATION</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Lagrange polynomials</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Linear interpolation</a></li>
+                    <li><a class="dropdown-item" href="#">Quadratic Interpolation</a></li>
+                    <li><a class="dropdown-item" href="#">General Form</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spline interpolation</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">LINEAR SPLINE</a></li>
+                    <li><a class="dropdown-item" href="#">QUADRATIC SPLINE</a></li>
+                    <li><a class="dropdown-item" href="#">CUBIC SPLINE</a></li>
+                  </ul>
+                </li>
+      
+                
+              </ul>
+      
+              
+      
+        
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Least Squares Regression
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Linear Regression</a>
+                  <a class="dropdown-item" href="#">Polynomial Regression</a>
+                  <a class="dropdown-item" href="#">Multiple linear regression</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Numerical Integration and Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Trapezoidal Rule</a>
+                  <a class="dropdown-item" href="#">Composite Trapezoidal Rule </a>
+                  <a class="dropdown-item" href="#">Simpson’s Rules</a>
+                  <a class="dropdown-item" href="#">Composite Simpson's Rule</a>
+             
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Numerical Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">First Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">First Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="#">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="#">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Second Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">First Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="#">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="#">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Numerical Integration and Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Euler's method</a>
+                  <a class="dropdown-item" href="#">Heun's method </a>
+                  <a class="dropdown-item" href="#">Modified Euler's method </a>
+             
+              </ul>
+            </li>
+      
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Submenu</a></li>
+                    <li><a class="dropdown-item" href="#">Submenu0</a></li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 1</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+      
+    
+      
+      
+      
+            <!--
+      
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Submenu</a></li>
+                    <li><a class="dropdown-item" href="#">Submenu0</a></li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 1</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+      -->
+</body>
+</html>
