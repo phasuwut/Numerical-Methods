@@ -1,0 +1,77 @@
+{
+  "_from": "conjugate-gradient",
+  "_id": "conjugate-gradient@0.0.2",
+  "_inBundle": false,
+  "_integrity": "sha1-zlk/nQUavxYeaAIkbyLGf9ge2FI=",
+  "_location": "/conjugate-gradient",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "conjugate-gradient",
+    "name": "conjugate-gradient",
+    "escapedName": "conjugate-gradient",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/conjugate-gradient/-/conjugate-gradient-0.0.2.tgz",
+  "_shasum": "ce593f9d051abf161e6802246f22c67fd81ed852",
+  "_spec": "conjugate-gradient",
+  "_where": "/Users/phasuwut",
+  "author": {
+    "name": "Mikola Lysenko"
+  },
+  "bugs": {
+    "url": "https://github.com/mikolalysenko/conjugate-gradient/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "almost-equal": "~0.0.0",
+    "bit-twiddle": "~0.0.1"
+  },
+  "deprecated": false,
+  "description": "Conjugate gradient solver",
+  "devDependencies": {
+    "csr-matrix": "~0.1.4",
+    "tap": "~0.4.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "gitHead": "f11e96ed2dace67dd71e2f5cdebd1a8871c894e5",
+  "homepage": "https://github.com/mikolalysenko/conjugate-gradient#readme",
+  "keywords": [
+    "linear",
+    "solve",
+    "algebra",
+    "math",
+    "numerical",
+    "method",
+    "conjugate",
+    "gradient",
+    "preconditioner",
+    "jacobi",
+    "diagonal",
+    "iterative",
+    "sparse",
+    "matrix",
+    "vector",
+    "physics"
+  ],
+  "license": "MIT",
+  "main": "pcg.js",
+  "name": "conjugate-gradient",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikolalysenko/conjugate-gradient.git"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "version": "0.0.2"
+}
