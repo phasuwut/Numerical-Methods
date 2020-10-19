@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Composite Trapezoidal Rule</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+    <link rel="stylesheet" href="import/bootstrap-4.3.1/dist/css/bootstrap.min.css">
+    <script src="import/jquery-3.3.1/jquery.min.js"></script>
+    
+    <script src="import/popper.js-1.14.7.js/dist/umd/popper.min.js"></script>
+    <script src="import/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+
+    <script src="import/MathJax-2.7.4/latest.js"></script>
+    
+    <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+    <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+    <script src="import/algebrite/dist/algebrite.bundle-for-browser.js"></script>
+    <link rel="stylesheet" href="import/w3.css">
+
+  <!--
+    การวาง มีผลนะ อะไรก่อนหลัง 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+        <script src="import/jquery-3.3.1/jquery.min.js"></script>
+        <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+         
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+            <script src="import/MathJax-2.7.4/latest.js"></script>
+
+  <script src="https://unpkg.com/mathjs@5.4.1/dist/math.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+            <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+             <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+
+
+             ////////
+  <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+  <script src="import/jquery-3.3.1/jquery.min.js"></script>
+  <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+ 
+  <script src="import/MathJax-2.7.4/latest.js"></script>
+  
+  <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+  <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+  -->
+  
+
+ 
+  <style>
+      #plot {
+        /* margin-top: 50px;*/
+       
+        width:auto;
+        margin: auto;
+      }
+  </style>
+
+ 
+  <script>
+  
+  function draw() {
+        try {
+          // compile the expression once
+          const expression = document.getElementById('fxx').value
+          const expr = math.compile(expression)
+
+          // evaluate the expression repeatedly for different values of x
+          const xValues = math.range(-10, 10, 0.5).toArray()
+          const yValues = xValues.map(function (x) {
+            return expr.eval({x: x})
+          })
+          // render the plot using plotly
+          const trace1 = {
+            x: xValues,
+            y: yValues,
+            type: 'scatter'
+          }
+          const data = [trace1]
+          Plotly.newPlot('plot', data)
+        }
+        catch (err) {
+          console.error(err)
+          alert(err)
+        }
+      }
+        
+    // draw() วาดกราฟ โดยใช้ getElementById('fx') ในการดึงข้อมูลมาวาด 
+    // <div id="plot"></div> เติมด้วย
+   
+  </script>
+
+
+  <script>
+
+    function Composite_Trapezoidal(){
+      Table_delete_data();
+      var fx = document.getElementById( "function_input" ).value;
+      var Ea = document.getElementById( "limit_a" ).value;
+      var Eb = document.getElementById( "limit_b" ).value;
+      var En = document.getElementById( "number_n" ).value;
+      var Arr1= new Array();// เก็บลำดับ xi ไว้ 
+      var Ei=0;
+      var h;
+      var Ebool=0;
+      var E_error;
+      // เช็คค่า
+      if( Number.isNaN( (Number( String(Ea) ) )) ){
+        Ebool=1;
+      }
+      if( Number.isNaN( (Number( String(Eb) ) )) ){
+        Ebool=1;
+      }
+      if( Number.isNaN( (Number( String(En) ) )) ){
+        Ebool=1;
+      }
+      if(fx==""){
+        Ebool=1;
+        //alert("q")
+      }
+
+      if(Ebool==0){
+        if(Ea<Eb){
+        
+          h=(Eb-Ea).toFixed(6);
+          h=h/En;
+          console.log("h ",h)
+          if(h==Infinity || h== -Infinity || h==NaN){
+            h=0;
+          }
+          Arr1[0]=Ea;
+          for(var i=1;i<En;i++){
+            var Ea1=Number(Arr1[0]) +Number((i*h));
+            //EaNumber=EaNumber.toFixed(6);
+            Ea1=Ea1.toFixed(6);
+            Arr1[i]=  Ea1;
+          }
+          //console.log(En);
+          Arr1[En]=Eb;
+          console.log(Arr1);
+
+          // func(X)
+
+          var sum=0,sum1=0;
+          sum=sum+func(Arr1[0]);
+          for(var i=1;i<En;i++){
+            sum1=sum1+(func(Arr1[i]));
+            console.log(i)
+          }
+          console.log(sum1);
+          sum1=sum1*2;
+          sum=sum+sum1;
+          sum=sum+func(Arr1[En]);
+          console.log("sum "+sum);
+          Ei=(h/2);
+          if(Ei==Infinity || Ei== -Infinity || Ei==NaN){
+            Ei=0;
+          }
+          Ei=Ei*sum;
+          console.log("ค่าโดยประมาณ " ,Ei); // ค่าโดยประมาณ
+       
+          // math.import(require('mathjs-simple-integral'));
+       //math.import(require('mathjs-simple-integral'));
+        //var options = { rules: math.integral.rules.concat([myUpperGammaRule]) };
+//math.integral("x",'x')
+
+//var Algebrite = require('algebrite')
+          var integral1,integral2;
+          integral1="integral("+fx+")";
+          console.log(Algebrite.run(integral1));
+          integral2= (Algebrite.run(integral1));
+          console.log( integral2);
+
+          console.log(" ",Ea," ",Eb);
+          var Ef_a,Ef_b,Esum;
+          Ef_a= func2(Ea,integral2);
+
+          console.log(Ef_a);
+          Ef_b= func2(Eb,integral2);
+          console.log(Ef_b);
+          Esum=Ef_b-Ef_a;
+          console.log("ค่าจากฟังชั้น ",Esum);//ค่าจากฟังชั้น 
+          Esum=Esum.toFixed(6);
+
+          //error
+          var Er;
+          //Er=(Ei-Esum).toFixed(6);
+          //Er=Er/Ei;
+          Er=(Esum-Ei).toFixed(6);
+          Er=Er/Esum;
+          if(Er==Infinity || Er== -Infinity || Er==NaN){
+            Er=0;
+          }
+          E_error= Math.abs(Er)*100;// absolute
+         // E_error=()
+         console.log("E_error ",E_error);//ค่าจากฟังชั้น 
+         E_error=E_error.toFixed(6);
+
+         output_matrix(3,2);  //สร้างตารางเพื่อแสดงผมลัพ
+         insert_data_to_matrix(Ei,Esum,E_error);
+        }
+        else{
+          alert("กรุราป้อนข้อมุลให้ถูกต้อง  a b ");
+        }
+      }
+      else{
+        alert("กรุราป้อนข้อมุลให้ถูกต้อง ");
+      }
+      
+
+    }
+
+    function func(X) { // คำนวนหา ฟังช้น
+         var expression = document.getElementById("function_input").value;
+         expr = math.compile(expression);
+         let scope = {x:parseFloat(X)};
+         return expr.eval(scope);
+    }
+   
+    function func2(X,fxx) { // คำนวนหา ฟังช้น
+         
+         expr = math.compile(fxx);
+         let scope = {x:parseFloat(X)};
+         return expr.eval(scope);
+    }
+
+    function output_matrix(m,n){
+                
+                //อ่าน Tag <div id matrix>
+                var body = document.getElementById( "matrix_output" );
+                // สร้าง <table> และ <tbody>
+                var tbl = document.getElementById( "table_output" );
+            
+                var tblBody = document.createElement( "tbody" );
+                tblBody.id="tbody_output"
+                // n แถว m คอลัมน์
+                var  cellText  = new Array(); 
+                for( var i = 0 ; i < m ; i++ ){
+                    cellText[i]  = new Array();
+                    // สร้าง row
+                    var row = document.createElement( "tr" );
+                    row.id="tr_output"
+                    // สร้าง col
+                    for( var j = 0 ; j < n ; j++ ){
+                        // สร้าง td
+                        
+                        var cell = document.createElement( "td" );
+                        cell.id="td_output"
+                        cellText[i][j] = document.createElement( "p" );
+                       // cellText[i][j].setAttribute( "width" , "8%" );
+                        cell.appendChild( cellText[i][j] );
+                        cellText[i][j].id = 'output'+i+j;
+                        row.appendChild( cell );
+                        if(j==0){
+                          cell.style="background-color: #FF8C00";
+
+                        }
+                    };
+                    // แทรกแถว ลงใน tbody
+                    tblBody.appendChild( row );
+                };
+                // ใส่ <tbody> ลงใน <table>
+                tbl.appendChild( tblBody );
+                // ใส่ <table> ลงใน <body>
+                body.appendChild( tbl );
+                // กำหนด border
+               // tbl.setAttribute( "border" , "0" );
+    }
+   
+    function insert_data_to_matrix(a1,a2,a3){
+      //output00
+      //output10
+  
+      for(var i=0;i<3;i++){
+        var str="output"+i+"0";
+        console.log(str);
+  
+        var insertD= document.getElementById(str);
+
+ 
+        if(i==0){
+          insertD.innerHTML = "ค่าโดยประมาณ ";
+
+        }
+        else if(i==1){
+          insertD.innerHTML = "ค่าจากฟังชั้น  ";
+
+        }
+        else if(i==2){
+          insertD.innerHTML = "ค่าerror ";
+
+        }
+
+      }
+
+      for(var i=0;i<3;i++){
+        var str="output"+i+"1";
+        console.log(str);
+  
+        var insertD= document.getElementById(str);
+        //arr4[i]= arr4[i].toFixed(6);
+       // insertD.innerHTML = arr4[i];
+
+
+        if(i==0){
+          insertD.innerHTML = a1.toFixed(6);;
+
+        }
+        else if(i==1){
+          insertD.innerHTML = a2;
+
+        }
+        else if(i==2){
+          insertD.innerHTML = a3
+
+        }
+
+      }
+      
+      
+       
+    }
+     
+
+
+    function Table_delete_data(){
+        console.log("asdfgh");
+        var Ee = document.getElementById("table_output"); 
+        var x = document.getElementById("table_output").rows.length;
+       
+        for(var i=0;i<x;i++){
+            Ee.deleteRow(0);
+        }
+
+      }
+  </script>
+
+
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light fixed-top  "style="background-color: 	#40E0D0;">
+        <a class="navbar-brand pb-2" href="index.html">Numerical</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="nav navbar-nav ">
+    
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Roots of Equations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="1_Graphical_Method.html">Graphical Method</a>
+                  <a class="dropdown-item" href="1_Bisection_Method.html">Bisection Method</a>
+                  <a class="dropdown-item" href="1_False-Position_Method.html">False-Position Method</a>
+                  <a class="dropdown-item" href="1_One-point_Iteration_Method.html">One-point Iteration Method</a>
+                  <a class="dropdown-item" href="1_Newton_Method.html">Newton Method</a>
+                  <a class="dropdown-item" href="1_Secant_Method.html">Secant Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Linear Algebraic Equations
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="2_Cramer’s_Rule.html">Cramer’s Rule</a>
+                  <a class="dropdown-item" href="2_Gauss_Elimination_Method.html">Gauss Elimination Method</a>
+                  <a class="dropdown-item" href="2_Gauss_Jordan_Method.html">Gauss-Jordan Method</a>
+                  <a class="dropdown-item" href="2_Matrix_Inversion_Method.html">Matrix Inversion Method</a>
+                  <a class="dropdown-item" href="2_LU_Decomposition_Method.html">LU Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Cholesky_Decomposition_Method.html">Cholesky Decomposition Method</a>
+                  <a class="dropdown-item" href="2_Jacobi_Iteration_Method.html">Jacobi Iteration Method</a>
+                  <a class="dropdown-item" href="2_Gauss-Seidel_Iteration_Method.html">Gauss-Seidel Iteration Method</a>
+                  <a class="dropdown-item" href="2_Conjugate_Gradient_Method.html">Conjugate Gradient Method</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Interpolation and Extrapolation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Newton's divided-differences</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Newton.html">LinearInterpolation</a></li>
+                    <li><a class="dropdown-item" href="3_Quadraticq_Newton.html">QUADRATIC INTERPOLATION</a></li>
+                    <li><a class="dropdown-item" href="3_Polynomial_Newton.html">POLYNOMIAL INTERPOLATION</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Lagrange polynomials</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Lagrange.html">Linear interpolation</a></li>
+                    <li><a class="dropdown-item" href="3_Quadratic_Lagrange.html">Quadratic Interpolation</a></li>
+                    <li><a class="dropdown-item" href="3_General_Form.html">General Form</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Spline interpolation</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="3_Linear_Spline.html">Linear Spline</a></li>
+                    <li><a class="dropdown-item" href="3_quadratic_splines.html">QUADRATIC SPLINE</a></li>
+                    <li><a class="dropdown-item" href="3_CUBIC_splines.html">CUBIC SPLINE</a></li>
+                  </ul>
+                </li>
+      
+                
+              </ul>
+      
+              
+      
+        
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Least Squares Regression
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="4_Linear_Regression.html">Linear Regression</a>
+                  <a class="dropdown-item" href="4_Polynomial_Regression.html">Polynomial Regression</a>
+                  <a class="dropdown-item" href="4_Multiple_linear_regression.html">Multiple linear regression</a>
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Integration and Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                 <!--
+                  <a class="dropdown-item" href="#">Trapezoidal Rule</a>
+                  <a class="dropdown-item" href="#">Composite Trapezoidal Rule </a>
+                  <a class="dropdown-item" href="#">Simpson’s Rules</a>
+                  <a class="dropdown-item" href="#">Composite Simpson's Rule</a>
+                 -->
+                 <a class="dropdown-item" href="5_Composite_Trapezoidal_Rule.html">Composite Trapezoidal Rule </a>
+                 <a class="dropdown-item" href="5_Composite_Simpson's_Rule.html">Composite Simpson's Rule</a>
+             
+              </ul>
+            </li>
+      
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Numerical Differentiation
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">First Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="6_Forward _First.html">Forward Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="6_Backward_First.html">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="6_Central_First.html">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Second Divided Difference</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="6_Forward_Second.html">Forward  Divided Difference </a></li>
+                    <li><a class="dropdown-item" href="6_Backward_Second.html">Backward Divided Difference</a></li>
+                    <li><a class="dropdown-item" href="6_Central_Second.html">Central Divided Difference</a></li>
+                  </ul>
+                </li>
+      
+              </ul>
+            </li>
+    
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Ordinary Differential Equation
+                  <!--
+                    Ordinary Differential Equation
+                  -->
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="7_Euler's_method.html">Euler's method</a>
+                  <a class="dropdown-item" href="7_Heunm_method.html">Heun's method </a>
+                  <a class="dropdown-item" href="7_Modified_Euler_method.html">Modified Euler's method </a>
+             
+              </ul>
+            </li>
+      
+      
+          
+      
+    
+      
+      
+      
+            <!--
+      
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Submenu</a></li>
+                    <li><a class="dropdown-item" href="#">Submenu0</a></li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 1</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu1</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                        <li><a class="dropdown-item" href="#">Subsubmenu2</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+      -->
+            
+      
+          </ul>
+        </div>
+    </nav>
+      
+    <style>
+          body  {
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+      
+      }
+      </style>
+    <style>
+  
+    .navbar-nav li:hover > ul.dropdown-menu {
+      display: block;
+      background-color: #FFC0CB;
+      
+  }
+  .dropdown-submenu {
+      position:relative;
+      background-color: #FFC0CB;
+  
+  }
+  .dropdown-submenu>.dropdown-menu {
+      top:0;
+      left:100%;
+      margin-top:-6px;
+      background-color: #FFC0CB;
+  
+  }
+
+  
+  /* rotate caret on hover */
+  .dropdown-menu > li > a:hover:after {
+      text-decoration: underline;
+      transform: rotate(-90deg);
+      background-color: #FFC0CB;
+  } 
+
+    </style>
+      <div class="container-fluid" style="margin-top:90px">
+      </div>
+     
+  
+
+
+
+  
+  
+
+    
+  <div class="container-fluid">
+      <center><p style="font-size:50px;">Composite Trapezoidal Rule</p>
+      </center>
+    <div class="row">
+        <div class="col-sm-3" >
+          </div>
+          <div class="col-sm-6" >
+              <center>
+              <div id="input_data">
+                  <p id="input_p_n" ></p>
+                    
+                  <div class="form-group">
+                      <label for="function_p" id="function_p" >function :</label>
+                      <input type="text" id="function_input" placeholder="f(x)"  class="w3-input w3-border w3-animate-input"  style="width:30%"> 
+                  </div>
+    
+                  
+                 
+                  <p id="limit_p" >Enter a,b lower limit: </p>
+                  <input type="text" id="limit_a" placeholder="a" > 
+                  <input type="text" id="limit_b" placeholder="b" > 
+    
+    
+                  <p id="number_p"></p>  Enter the number of trapezoids </p>
+                  <input type="text" id="number_n" placeholder="n" class="w3-input w3-border w3-animate-input"  style="width:30%" > 
+
+                  <br>
+                  <input type="button" onclick="Composite_Trapezoidal()" id="input_n_button" value="ทำงาน" class="btn btn-primary "> 
+                  <br>
+
+              </div>
+            </center>
+          </div>
+          <div class="col-sm-3" >
+            </div>
+    </div>
+  
+    <div class="row">
+        <div class="col-sm-12" >
+          <div id='matrix_input' class="table-responsive">          
+              <!--  "input_data_table"
+                //input_data_table     
+                    //  input_data_tbody
+                    // input_data_tr
+                    // input_data_td
+                ตาราง-->
+          </div>
+        </div>
+     </div>
+
+    <div class="row">
+        <div class="column">
+            <div id="Interpolation">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3" >
+          </div>
+        <div class="col-sm-6" >
+
+            <center>
+                <div class="table-responsive" id="matrix_output">
+                    <table class="table " id="table_output">
+            
+                    </table>
+                </div>
+            </center>
+
+
+        </div>
+        <div class="col-sm-3" >
+          </div>
+    </div>
+
+
+<!--
+  <div class="container-fluid">
+                                                                                      
+    
+      <div class="table-responsive">
+        <table class="table table-bordered" id="myTable">
+          <thead>
+            <tr>
+                  <th>Iteration</th>
+                  <th>xl</th>
+                  <th>xr</th>
+                  <th>xi</th>
+                  <th>xerror</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+          </tbody>
+        </table>
+      </div>
+      
+  </div>
+
+
+
+-->
+
+</div>
+
+<style>
+  
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: center;
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    td{
+      text-align: center;
+    
+    }
+     input{
+      text-align: center;
+
+     }
+     tr,td,tbody,table{
+      text-align: center;
+      border: 1px solid black;
+     
+     }
+     tr:hover {background-color:#FFE4B5;}
+    
+    tr {background-color:#FA8072;}
+    table {
+        border-collapse: collapse;
+    }
+    
+    </style>
+</body>
+</html>
