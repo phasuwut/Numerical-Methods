@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+    <link rel="stylesheet" href="import/bootstrap-4.3.1/dist/css/bootstrap.min.css">
+    <script src="import/jquery-3.3.1/jquery.min.js"></script>
+    
+    <script src="import/popper.js-1.14.7.js/dist/umd/popper.min.js"></script>
+    <script src="import/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+
+    <script src="import/MathJax-2.7.4/latest.js"></script>
+    
+    <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+    <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+
+  <!--
+    การวาง มีผลนะ อะไรก่อนหลัง 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+        <script src="import/jquery-3.3.1/jquery.min.js"></script>
+        <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+         
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+            <script src="import/MathJax-2.7.4/latest.js"></script>
+
+  <script src="https://unpkg.com/mathjs@5.4.1/dist/math.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+            <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+             <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+
+
+             ////////
+  <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+  <script src="import/jquery-3.3.1/jquery.min.js"></script>
+  <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+ 
+  <script src="import/MathJax-2.7.4/latest.js"></script>
+  
+  <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+  <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+  -->
+  
+
+  <script>
+  
+  function draw() {
+        try {
+          // compile the expression once
+          const expression = document.getElementById('fxx').value
+          const expr = math.compile(expression)
+
+          // evaluate the expression repeatedly for different values of x
+          const xValues = math.range(-10, 10, 0.5).toArray()
+          const yValues = xValues.map(function (x) {
+            return expr.eval({x: x})
+          })
+          // render the plot using plotly
+          const trace1 = {
+            x: xValues,
+            y: yValues,
+            type: 'scatter'
+          }
+          const data = [trace1]
+          Plotly.newPlot('plot', data)
+        }
+        catch (err) {
+          console.error(err)
+          alert(err)
+        }
+      }
+        
+    // draw() วาดกราฟ โดยใช้ getElementById('fx') ในการดึงข้อมูลมาวาด 
+    // <div id="plot"></div> เติมด้วย
+    
+  </script>
+
+<script>  
+  
+  </script>
+
+  <script>
+  // Table_delete_data() // ล้างข้อมูลในตาราง
+  function Table_delete_data(){
+        
+        var x = document.getElementById("myTable");
+          
+      //   x.length
+      for(var i=1;i<it;i++){
+          x.deleteRow(-1);
+  
+      }
+        it=1;
+      }
+
+  // คำนวนหา ฟังช้น
+  function func(X) { // คำนวนหา ฟังช้น
+         var expression = document.getElementById("fxx").value;
+         expr = math.compile(expression);
+         let scope = {x:parseFloat(X)};
+         return expr.eval(scope);
+  }
+  
+  function funcDiff(X) {
+      var expression = document.getElementById("fxx").value;
+      expr = math.derivative(expression, 'x');
+      let scope = {x:parseFloat(X)};
+      return expr.eval(scope); 
+    }
+
+  </script>
+
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="index.html">Home</a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="nav navbar-nav navbar-rightt">
+       
+      
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Roots of Wquations
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="1_Graphical_Method.html">Graphical Method</a>
+          <a class="dropdown-item" href="1_Bisection_Method.html">Bisection Method</a>
+          <a class="dropdown-item" href="1_False-Position_Method.html">False-Position Method</a>
+          <a class="dropdown-item" href="1_One-point_Iteration_Method.html">One-point Iteration Method</a>
+          <a class="dropdown-item" href="1_Newton_Method.html">Newton Method</a>
+          <a class="dropdown-item" href="1_Secant_Method.html">Secant Method</a>
+        </div>
+      </li>
+
+       
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            LINEAR ALGEBRAIC EQUATIONS
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="2_Cramer’s_Rule.html">Cramer’s Rule</a>
+            <a class="dropdown-item" href="2_Gauss_Elimination_Method.html">Gauss Elimination Method</a>
+            <a class="dropdown-item" href="2_Gauss_Jordan_Method.html">Gauss-Jordan Method</a>
+            <a class="dropdown-item" href="2_Matrix_Inversion_Method.html">Matrix Inversion Method</a>
+            <a class="dropdown-item" href="2_LU_Decomposition_Method.html">LU Decomposition Method</a>
+            <a class="dropdown-item" href="2_Cholesky_Decomposition_Method.html">Cholesky Decomposition Method</a>
+            <a class="dropdown-item" href="2_Jacobi_Iteration_Method.html">Jacobi Iteration Method</a>
+            <a class="dropdown-item" href="2_Gauss-Seidel_Iteration_Method.html">Gauss-Seidel Iteration Method</a>
+            <a class="dropdown-item" href="2_Conjugate_Gradient_Method.html">Conjugate Gradient Method</a>
+          </div>
+        </li>  
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+      </ul>
+
+      
+      
+    </div>  
+  </nav>
+  
+<p style="font-size:50px;">1</p>
+
+
+<div class="row">
+    <div class="column">
+        <div class="container" style="margin-top:80px">
+            <div>
+                <form id="False-Position">
+                  <input type="text" id="xl" placeholder="กรุณาป้อนค่าน้อยสุด" />
+                  <input type="text" id="xr" placeholder="กรุณาป้อนค่ามากสุด" />
+                  <input type="text" id="fxx" placeholder="กรุณาป้อนฟังชั้น"  />         
+                  <input type="button" value="submit" onclick="" />
+                </form>
+          
+              </div>
+          </div>
+  
+    </div>
+          
+    <div class="column">
+        <div id="plot"></div>
+    </div>
+        
+  </div> 
+  
+
+
+
+
+
+<br>
+<div>
+  <table id="myTable" >
+      <thead>
+          <tr>
+            <th>Iteration</th>
+            <th>xl</th>
+            <th>xr</th>
+            <th>xi</th>
+            <th>xerror</th>
+          </tr>
+      </thead>
+
+      <tbody>
+       
+        
+         
+        </tbody>
+  </table>
+</div>
+
+<style>
+   
+ 
+    #input_data_table {
+      background-color: #4CAF50;
+      border: 1px solid #ddd;
+    }
+   input {
+      background-color: #4CAF50;
+      border: 1px solid #ddd;
+    }
+    #td_output,#tr_output,#tbody_output,#table_output { 
+     
+      border: 1px solid #ddd;
+      height: 50px;
+       width:50px;
+}
+  
+</style>
+
+<style>
+    #myTable {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #myTable td, #myTable th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #myTable tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #myTable tr:hover {background-color: #ddd;}
+    
+    #myTable th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+    }
+</style>
+ 
+
+</body>
+</html>

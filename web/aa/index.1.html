@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+    <link rel="stylesheet" href="import/bootstrap-4.3.1/dist/css/bootstrap.min.css">
+    <script src="import/jquery-3.3.1/jquery.min.js"></script>
+    
+    <script src="import/popper.js-1.14.7.js/dist/umd/popper.min.js"></script>
+    <script src="import/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+
+    <script src="import/MathJax-2.7.4/latest.js"></script>
+    
+    <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+    <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+
+  <!--
+    การวาง มีผลนะ อะไรก่อนหลัง 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+        <script src="import/jquery-3.3.1/jquery.min.js"></script>
+        <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+         
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+            <script src="import/MathJax-2.7.4/latest.js"></script>
+
+  <script src="https://unpkg.com/mathjs@5.4.1/dist/math.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+            <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+             <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+
+
+             ////////
+  <link rel="stylesheet" href="import/bootstrap-3.3.7/css/bootstrap.min.css">
+  <script src="import/jquery-3.3.1/jquery.min.js"></script>
+  <script src="import/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+ 
+  <script src="import/MathJax-2.7.4/latest.js"></script>
+  
+  <script src="import/mathjs-5.4.1/dist/math.min.js"></script>
+  <script src="import/plotly-1.35.2/dist/plotly.min.js"></script>
+  -->
+  
+
+  <script>
+    var En;
+    var  arr1  = new Array(); 
+    var  arr2  = new Array();
+    var arr4=new Array(); //output
+    var Eboolen=0;  //เช็คข้อมูลในตารางว่าเป็นเลขป่าว นะ 0เป้น    1ไม่เป็น
+   
+    function create_n_to_matrix(){
+        En=document.getElementById("input_n").value;
+        if((isNaN(En)==false)&&(En!="")){
+          //ถ้าเป็นตัวเลขจะเป็น false
+          var gg='คุณได้สร้าง'+En;
+          En=parseFloat(En); //แปลเป็นfloat
+          create_matrix(En,En+1);  // สร้างตารางเพื่อรับข้อมูล
+          
+          document.getElementById("input_n_button").style.display='none';
+          // style.display='block'; //แสดง
+          //style.display='none' // ซ่อน
+          
+          document.getElementById("input_n").style.display='none';
+          document.getElementById("input_p_n").innerHTML=gg;
+         
+          
+          // document.getElementById("run_data").style.display='none';  // ซ่อน ปุ่ม
+          //
+          // ช่ิงรับข้อมุล  input00  input01
+      }
+      else{
+        alert("กรุณาป้อนข้อมูลให้ถูกต้อง นะ");
+      }
+    
+    }
+    
+    function create_3_n_to_matrix(){
+        En=document.getElementById("input_n").value;
+        if((isNaN(En)==false)&&(En!="")){
+          //ถ้าเป็นตัวเลขจะเป็น false
+          var gg='คุณได้สร้าง'+En;
+          En=parseFloat(En); //แปลเป็นfloat
+          create_matrix_3_n1(3,En+1)  // สร้างตารางเพื่อรับข้อมูล
+          
+          document.getElementById("input_n_button").style.display='none';
+          // style.display='block'; //แสดง
+          //style.display='none' // ซ่อน
+          document.getElementById("input_n_text").style.display = "none";
+          document.getElementById("input_n").style.display='none';
+          document.getElementById("input_p_n").innerHTML=gg;
+         
+          
+          set_i_j_0();
+          create_input_button();
+          
+          // document.getElementById("run_data").style.display='none';  // ซ่อน ปุ่ม
+          //
+          // ช่ิงรับข้อมุล  input00  input01
+      }
+      else{
+        alert("กรุณาป้อนข้อมูลให้ถูกต้อง นะ");
+      }
+    
+    }
+
+    function create_matrix_3_n1(m,n){
+              //input_data_table     
+             //  input_data_tbody
+             // input_data_tr
+             // input_data_td
+              //อ่าน Tag <div id matrix>
+              var body = document.getElementById( "matrix_input" );
+              // สร้าง <table> และ <tbody>
+              var tbl= document.createElement( "table" );
+              tbl.id="input_data_table";
+              var tblBody = document.createElement( "tbody" );
+              tblBody.id="input_data_tbody";
+              // n แถว m คอลัมน์
+              var  cellText  = new Array(); 
+              for( var i = 0 ; i < m ; i++ )
+              {
+                  cellText[i]  = new Array();
+                  // สร้าง row
+                  var row = document.createElement( "tr" );
+                  row.id="input_data_tr";
+                  // สร้าง col
+                  for( var j = 0 ; j < n ; j++ )
+                  {
+                    if(j==0 || i==0){
+                      var cell = document.createElement( "td" );
+                      cell.id="input_data_td";
+
+                      var para = document.createElement("p");
+                      var node = document.createTextNode("This is new.");
+                      para.appendChild(node);       
+
+                      cellText[i][j] = document.createElement( "p" );
+                      cellText[i][j].setAttribute( "width" , "8%" );
+                      
+                      cellText[i][j].appendChild(para );
+                      cell.appendChild( cellText[i][j] );
+                      
+                     
+                      cellText[i][j].id = 'input'+i+j;
+                      row.appendChild( cell );
+                    }
+                    else{
+                       // สร้าง td 
+                      var cell = document.createElement( "td" );
+                      cell.id="input_data_td";
+                      cellText[i][j] = document.createElement( "input" );
+                      cellText[i][j].setAttribute( "width" , "8%" );
+                      cell.appendChild( cellText[i][j] );
+                      cellText[i][j].id = 'input'+i+j;
+                      row.appendChild( cell );
+                    }
+                     
+                  };
+                  // แทรกแถว ลงใน tbody
+                  tblBody.appendChild( row );
+              };
+              // ใส่ <tbody> ลงใน <table>
+              tbl.appendChild( tblBody );
+              // ใส่ <table> ลงใน <body>
+              body.appendChild( tbl );
+              // กำหนด border
+             // tbl.setAttribute( "border" , "0" );
+            }
+
+//เอาไว้แก้ไขข้อมูลส่วนที่ให้กรอกว่า fx i x 
+    function set_i_j_0(){
+      for(var i=0;i<3;i++){
+         for(var j=0;j<En+1;j++){
+           if(i==0 || j==0){
+             var string111='input'+i+j;
+             if(i==0 && j==0){
+                
+                if(j==0){
+                  document.getElementById(string111).innerHTML = 'i';
+                }
+                
+             } 
+             else if(i==1 && j==0){
+                document.getElementById(string111).innerHTML = "xi";
+             }
+             else if(i==2 && j==0){
+                document.getElementById(string111).innerHTML = "f(xi)";
+             }
+             else{
+                  document.getElementById(string111).innerHTML = j-1;
+                }
+            
+           }
+         }
+       }
+
+      
+     }
+     
+    function push_data_maritx_to_array(){
+  
+  
+      
+        for(var i=0;i<En;i++){
+          arr1[i]  = new Array();
+          var j;
+            for(j=0;j<En;j++){
+              
+              var stringij='input'+i+j;
+              var EEij=document.getElementById(stringij).value; //ไปเอาข้อมูลใน ตารางมา
+              arr1[i][j]=EEij;
+            }
+            //j=j+1;
+            var stringij='input'+i+j;
+           // console.log(stringij);
+            var EEij=document.getElementById(stringij).value; //ไปเอาข้อมูลใน ตารางมา
+           // console.log(EEij);
+            arr2[i]=EEij;
+        }
+          console.log(arr1);
+          console.log(arr2);
+  
+  
+  
+  
+  
+    }
+  
+    function check_float_to_martix(){
+      
+      for(var i=0;i<En;i++){
+        for(var j=0;j<En;j++){
+         // console.log(isNaN(arr1[i][j])," gg");
+         if(isNaN(arr1[i][j])==false && (arr1[i][j] !="")){}
+         else{
+            Eboolen =1; 
+         }
+          
+        }
+        if(isNaN(arr2[i])==false && (arr2[i] !="")){}
+         else{
+            Eboolen =1; 
+         }
+  
+      }
+  
+    }
+  
+    function check_data_j_to_n_is_repeatedly(){
+      //arr1
+      var Edata_num=0;
+      for(var i=0;i<En;i++){
+        var Edatai=arr1[i][0];
+        Edata_num=0;
+        for(var j=0;j<En;j++){
+          if( (Edatai==arr1[i][j]) ){
+              Edata_num=Edata_num+1;
+          }
+        }
+        if(Edata_num==(En)){
+          return (i+1);
+        }
+        
+      }
+      return 0;
+    }
+     
+    function check_data_ij_0_martix(){
+      var Eij0=0;
+      for(var i=0;i<En;i++){
+        for(var j=0;j<En;j++){
+            if(arr1[i][j]==0){
+              Eij0=Eij0+1;
+            }
+        }
+      }
+      if(Eij0==En){
+        return 1;
+      }
+      return 0;
+    }
+  
+    function output_matrix(m,n){
+              
+              //อ่าน Tag <div id matrix>
+              var body = document.getElementById( "matrix_output" );
+              // สร้าง <table> และ <tbody>
+              var tbl = document.createElement( "table" );
+              tbl.id="table_output"
+              var tblBody = document.createElement( "tbody" );
+              tblBody.id="tbody_output"
+              // n แถว m คอลัมน์
+              var  cellText  = new Array(); 
+              for( var i = 0 ; i < m ; i++ )
+              {
+                  cellText[i]  = new Array();
+                  // สร้าง row
+                  var row = document.createElement( "tr" );
+                  row.id="tr_output"
+                  // สร้าง col
+                  for( var j = 0 ; j < n ; j++ )
+                  {
+                      // สร้าง td
+                      
+                      var cell = document.createElement( "td" );
+                      cell.id="td_output"
+                      cellText[i][j] = document.createElement( "p" );
+                     // cellText[i][j].setAttribute( "width" , "8%" );
+                      cell.appendChild( cellText[i][j] );
+                      cellText[i][j].id = 'output'+i+j;
+                      row.appendChild( cell );
+                  };
+                  // แทรกแถว ลงใน tbody
+                  tblBody.appendChild( row );
+              };
+              // ใส่ <tbody> ลงใน <table>
+              tbl.appendChild( tblBody );
+              // ใส่ <table> ลงใน <body>
+              body.appendChild( tbl );
+              // กำหนด border
+             // tbl.setAttribute( "border" , "0" );
+  }
+     
+    function insert_data_to_matrix(){
+      //output00
+      //output10
+  
+      for(var i=0;i<En;i++){
+        var str="output"+i+"0";
+        console.log(str);
+  
+        var insertD= document.getElementById(str);
+        insertD.innerHTML = arr4[i];
+      }
+      
+      
+       
+    }
+    
+    function create_matrix(m,n){
+              //input_data_table     
+             //  input_data_tbody
+             // input_data_tr
+             // input_data_td
+              //อ่าน Tag <div id matrix>
+              var body = document.getElementById( "matrix_input" );
+              // สร้าง <table> และ <tbody>
+              var tbl= document.createElement( "table" );
+              tbl.id="input_data_table";
+              var tblBody = document.createElement( "tbody" );
+              tblBody.id="input_data_tbody";
+              // n แถว m คอลัมน์
+              var  cellText  = new Array(); 
+              for( var i = 0 ; i < m ; i++ )
+              {
+                  cellText[i]  = new Array();
+                  // สร้าง row
+                  var row = document.createElement( "tr" );
+                  row.id="input_data_tr";
+                  // สร้าง col
+                  for( var j = 0 ; j < n ; j++ )
+                  {
+                      // สร้าง td
+                      
+                      var cell = document.createElement( "td" );
+                      cell.id="input_data_td";
+                      cellText[i][j] = document.createElement( "input" );
+                      cellText[i][j].setAttribute( "width" , "8%" );
+                      cell.appendChild( cellText[i][j] );
+                      cellText[i][j].id = 'input'+i+j;
+                      row.appendChild( cell );
+                  };
+                  // แทรกแถว ลงใน tbody
+                  tblBody.appendChild( row );
+              };
+              // ใส่ <tbody> ลงใน <table>
+              tbl.appendChild( tblBody );
+              // ใส่ <table> ลงใน <body>
+              body.appendChild( tbl );
+              // กำหนด border
+             // tbl.setAttribute( "border" , "0" );
+            }
+     
+    function check_symmetric(a,at){
+
+      for (var i = 0; i < N; i++) {
+          for (var j = 0; j < N; j++) {
+              if (a[i][j] != at[i][j]) {
+                return false; 
+              } 
+          }
+      }
+      return true;     
+    }
+
+    function create_input_button(){
+      var body = document.getElementById( "input_data" );
+          // สร้าง <table> และ <tbody>
+            
+              var tbl= document.createElement( "input" );
+              tbl.type="button";
+              tbl.id="input_data_toarray";
+              tbl.value="ใส่ข้อมูล"
+              tbl.onclick=push_data_maritx_input_to_arr1;//push_data_maritx_input_to_arr1() มันต้องเขียนแบบนี้
+
+
+            
+
+              body.appendChild( tbl );
+              
+     }
+
+    function push_data_maritx_input_to_arr1(){
+        
+        //Number.isFinite(-1.23) //true
+        var Earr1 = new Array();
+        //var Earr2 = new Array();
+
+        for(var i=0;i<3;i++){
+          Earr1[i]  = new Array();
+          var j;
+            for(j=0;j<En+1;j++){
+              if(i==0 || j==0){
+                Earr1[i][j]="ads";
+              }
+              else{
+                var stringij='input'+i+j;
+                var EEij=document.getElementById(stringij).value; //ไปเอาข้อมูลใน ตารางมา
+                Earr1[i][j]=EEij;
+              }
+        
+            }
+        
+        }
+
+      //เช็คว่าเป็นเลขป่าว
+        var boolen1=1;
+        for(var i=1;i<3;i++){
+            for(j=1;j<En+1;j++){
+              if(i==0 || j==0){}
+              else{
+
+                Earr1[i][j]=parseFloat(Earr1[i][j]);
+
+                if(Number.isFinite(Earr1[i][j])==true){}
+                else{
+                  boolen1=0;
+                }
+              }   
+
+            }  
+        }
+
+        
+
+          if(boolen1==1){
+            for(var i=0;i<3;i++){
+              if(i==0){}
+              else{
+                arr1[i-1]  = new Array();
+              }
+            var j;
+              for(j=0;j<En+1;j++){
+                if(i==0 || j==0){
+
+                }
+                else{
+                  arr1[i-1][j-1]=Earr1[i][j];
+                }
+              
+                
+              }    
+            
+            }
+            document.getElementById("input_data_toarray").style.display='none';
+          // Linear_2();
+               setAttribute_input_data_arr1_to_Element();
+               Interpolation();
+          }
+          else{
+              alert("กรุณาป้อนข้อมูลให้ถูหต้อง");
+          }
+
+          console.log(arr1);
+
+
+
+        }
+
+    function setAttribute_input_data_arr1_to_Element(){
+      for(var i=0;i<3;i++){
+        for(var j=0;j<En+1;j++){
+          //var st1=
+          var EEij=document.getElementById('input'+i+j);
+          EEij.disabled = true;//แก้ไขได้
+        }
+      }
+    }
+
+    function Interpolation(){
+        var body = document.getElementById( "Interpolation" );
+          // สร้าง <table> และ <tbody>
+        var tbl= document.createElement( "table" );
+        tbl.id="Interpolation_data_table";
+        var tblBody = document.createElement( "tbody" );
+        tblBody.id="Interpolation_data_tbody";
+              // n แถว m คอลัมน์
+        var  cellText  = new Array(); 
+        for( var i = 0 ; i < 1 ; i++ ){
+            cellText[i]  = new Array();
+            // สร้าง row
+            var row = document.createElement( "tr" );
+            row.id="Interpolation_data_tr";
+             // สร้าง col
+            for( var j = 0 ; j < 3 ; j++ ){
+                if(j==0){
+                    var cell = document.createElement( "td" );
+                    cell.id="Interpolation_data_td";
+                    var para = document.createElement("p");
+                    var node = document.createTextNode("ป้อนจุดเริ่มต้น กับจุดจบ");
+                    para.appendChild(node);       
+                    cellText[i][j] = document.createElement( "p" );
+                    cellText[i][j].setAttribute( "width" , "8%" );               
+                    cellText[i][j].appendChild(para );
+                    cell.appendChild( cellText[i][j] );
+                    cellText[i][j].id = 'Interpolation'+i+j;
+                    row.appendChild( cell );
+                }
+                else if(j==1){
+                    var cell = document.createElement( "td" );
+                    cell.id="Interpolation_data_td";
+                    cellText[i][j] = document.createElement( "input" );
+                    cellText[i][j].setAttribute( "width" , "8%" );
+                    cell.appendChild( cellText[i][j] );
+                    cellText[i][j].id = 'Interpolation'+i+j;
+                    row.appendChild( cell );
+                }
+                else  if(j==2){
+                    var cell = document.createElement( "td" );
+                    cell.id="Interpolation_data_td";
+                    cellText[i][j] = document.createElement( "input" );
+                    cellText[i][j].setAttribute( "width" , "8%" );
+                    cell.appendChild( cellText[i][j] );
+                    cellText[i][j].id = 'Interpolation'+i+j;
+                    row.appendChild( cell );
+                }
+                    
+            };
+                  // แทรกแถว ลงใน tbody
+        tblBody.appendChild( row );
+      };
+        // ใส่ <tbody> ลงใน <table>
+        tbl.appendChild( tblBody );
+        // ใส่ <table> ลงใน <body>
+        body.appendChild( tbl );
+        // กำหนด border
+        // tbl.setAttribute( "border" , "0" );
+
+        var t2= document.createElement( "input" );
+        t2.type="button";
+        t2.id="calculate_data";
+        t2.value="คำนวน"
+        
+
+        var t3= document.createElement( "input" );
+		    t3.type="text";
+        t3.id="fx_x_text";
+        t3.value="กรุณาป้อน ค่า x ของ f(x)";
+                    
+        var t4= document.createElement( "input" );
+				t4.type="input";
+				t4.id="fx_x_input";
+        t4.setAttribute( "width" , "8%" )
+        
+        body.appendChild( t2 );
+        body.appendChild( t3 ); 
+        body.appendChild( t4 );  
+    }
+
+    function draw() {
+        try {
+          // compile the expression once
+          const expression = document.getElementById('fx').value
+          const expr = math.compile(expression)
+
+          // evaluate the expression repeatedly for different values of x
+          const xValues = math.range(-10, 10, 0.5).toArray()
+          const yValues = xValues.map(function (x) {
+            return expr.eval({x: x})
+          })
+          // render the plot using plotly
+          const trace1 = {
+            x: xValues,
+            y: yValues,
+            type: 'scatter'
+          }
+          const data = [trace1]
+          Plotly.newPlot('plot', data)
+        }
+        catch (err) {
+          console.error(err)
+          alert(err)
+        }
+      }
+        
+     // draw() วาดกราฟ โดยใช้ getElementById('fx') ในการดึงข้อมูลมาวาด 
+    // <div id="plot"></div> เติมด้วย
+
+
+
+
+
+     // push_data_maritx_to_array(); // ไปเอาข้อมุลลงอาเรย์
+     // check_float_to_martix(); //เอาไปเช็คว่าเป็นเลขป่าว
+     
+      // output_matrix(En,1);  //สร้างตารางเพื่อแสดงผมลัพ
+     //  insert_data_to_matrix(); //ใส่ข้อมูลลงหน้า gui
+        
+     //check_symmetric(a,at) // เป็นการเช็คว่าเป็น symmetric  true false
+     //create_matrix_3_n1(m,n) //สร้างอาเรย์ [3][n+1]
+
+    //push_data_maritx_input_to_arr1() เอาข้อมูลในเมทริกลง array  arr1 
+     //set_i_j_0() เอาไว้แก้ไขข้อมูลส่วนที่ให้กรอกว่า fx i x 
+     // setAttribute_input_data_arr1_to_Element() ล็อกไม่ให้แก้ไขข้อมูล ในตารางเมทริก
+    </script>
+
+
+
+
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="index.html">Home</a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="nav navbar-nav navbar-rightt">
+       
+      
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Roots of Wquations
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="1_Graphical_Method.html">Graphical Method</a>
+          <a class="dropdown-item" href="1_Bisection_Method.html">Bisection Method</a>
+          <a class="dropdown-item" href="1_False-Position_Method.html">False-Position Method</a>
+          <a class="dropdown-item" href="1_One-point_Iteration_Method.html">One-point Iteration Method</a>
+          <a class="dropdown-item" href="1_Newton_Method.html">Newton Method</a>
+          <a class="dropdown-item" href="1_Secant_Method.html">Secant Method</a>
+        </div>
+      </li>
+
+       
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            LINEAR ALGEBRAIC EQUATIONS
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="2_Cramer’s_Rule.html">Cramer’s Rule</a>
+            <a class="dropdown-item" href="2_Gauss_Elimination_Method.html">Gauss Elimination Method</a>
+            <a class="dropdown-item" href="2_Gauss_Jordan_Method.html">Gauss-Jordan Method</a>
+            <a class="dropdown-item" href="2_Matrix_Inversion_Method.html">Matrix Inversion Method</a>
+            <a class="dropdown-item" href="2_LU_Decomposition_Method.html">LU Decomposition Method</a>
+            <a class="dropdown-item" href="2_Cholesky_Decomposition_Method.html">Cholesky Decomposition Method</a>
+            <a class="dropdown-item" href="2_Jacobi_Iteration_Method.html">Jacobi Iteration Method</a>
+            <a class="dropdown-item" href="2_Gauss-Seidel_Iteration_Method.html">Gauss-Seidel Iteration Method</a>
+            <a class="dropdown-item" href="2_Conjugate_Gradient_Method.html">Conjugate Gradient Method</a>
+          </div>
+        </li>  
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+      </ul>
+
+      
+      
+    </div>  
+  </nav>
+  
+ 
+
+ 
+<p style="font-size:50px;">index</p>
+
+<div id="plot"></div>
+
+<!--
+
+
+<div id="input_data">
+    <input type="text" id="input_n_text" value="คุณจะเอาป้อนกี่ตัว"> 
+
+  <input type="button" onclick="" id="input_n_button" value="รับข้อมูล"> 
+
+    <p id="input_p_n"></p>
+
+    <input type="text" id="input_n">
+
+</div>
+
+<div id='matrix_input'>          
+  
+</div>
+
+<div id="Interpolation">
+  
+  
+  
+  </div>
+
+
+
+<div id='matrix_output'>     
+  
+  </div>
+  
+-->
+
+<style>
+   
+ 
+    #input_data_table {
+      background-color: #4CAF50;
+      border: 1px solid #ddd;
+    }
+   input {
+      background-color: #4CAF50;
+      border: 1px solid #ddd;
+    }
+    #td_output,#tr_output,#tbody_output,#table_output { 
+     
+      border: 1px solid #ddd;
+      height: 50px;
+       width:50px;
+}
+  
+    </style>
+</body>
+</html>
