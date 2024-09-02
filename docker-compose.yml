@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: nginx:alpine  # ใช้ image Nginx
+    ports:
+      - "8080:80"  # map พอร์ต 80 ใน container ไปยังพอร์ต 8080 บนเครื่องของคุณ
+    volumes:
+      #- .web:/usr/share/nginx/html/index.html  # เชื่อมโยงไฟล์ HTML กับ container
+      - ./web:/usr/share/nginx/html

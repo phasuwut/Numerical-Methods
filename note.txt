@@ -1,0 +1,4 @@
+docker build -t my-html-app .    
+docker run -d -p 8080:80 my-html-app
+
+docker-compose up -d
