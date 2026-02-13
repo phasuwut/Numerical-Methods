@@ -18,6 +18,18 @@ pipeline {
 				sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
 			}
 		}
+
+		stage('Compose Build') {
+			steps {
+				sh "docker-compose build"
+			}
+		}
+
+		stage('Compose Up (Detached)') {
+			steps {
+				sh "docker-compose up -d"
+			}
+		}
 	}
 
 	post {
